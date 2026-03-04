@@ -9,7 +9,7 @@ const nextConfig = {
   i18n: {
     locales: ['en', 'zh-TW', 'fr', 'de', 'pt', 'es', 'th'],
     defaultLocale: 'en',
-    localeDetection: true
+    localeDetection: false
   },
   async rewrites() {
     return [
