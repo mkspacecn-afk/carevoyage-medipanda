@@ -1,0 +1,15 @@
+{
+  "common": {
+    "bookNow": "Book Now",
+    "consultation": "Book Consultation",
+    "signIn": "Sign In",
+    "services": "Medical Services",
+    "hospitals": "Partner Hospitals",
+    "about": "About Us",
+    "contact": "Contact Us"
+  },
+  "hero": {
+    "title": "Your Health Journey Starts Here",
+    "subtitle": "Experience China's world-class medical care with personalized service."
+  }
+}
