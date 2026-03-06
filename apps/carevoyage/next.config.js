@@ -2,6 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  output: 'standalone',
   images: {
     domains: ['localhost'],
     unoptimized: true
@@ -10,14 +11,6 @@ const nextConfig = {
     locales: ['en', 'zh-TW', 'fr', 'de', 'pt', 'es', 'th'],
     defaultLocale: 'en',
     localeDetection: false
-  },
-  async rewrites() {
-    return [
-      {
-        source: '/api/stripe/:path*',
-        destination: 'https://api.stripe.com/v1/:path*'
-      }
-    ]
   }
 }
 
