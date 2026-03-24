@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cigna Pre-authorization Request Form</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Helvetica', 'Arial', sans-serif;
+      font-size: 11pt;
+      line-height: 1.4;
+      color: #333;
+      background: white;
+    }
+    
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      padding: 15mm;
+      margin: 0 auto;
+      background: white;
+      page-break-after: always;
+    }
+    
+    .page:last-child {
+      page-break-after: auto;
+    }
+    
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #0D9488 0%, #115E59 100%);
+      color: white;
+      padding: 20px 25px;
+      margin: -15mm -15mm 20px -15mm;
+    }
+    
+    .header h1 {
+      font-size: 24pt;
+      font-weight: 600;
+      margin-bottom: 5px;
+      letter-spacing: 1px;
+    }
+    
+    .header h2 {
+      font-size: 14pt;
+      font-weight: 400;
+      opacity: 0.9;
+    }
+    
+    .header-note {
+      margin-top: 10px;
+      font-size: 9pt;
+      opacity: 0.8;
+      font-style: italic;
+    }
+    
+    /* Section */
+    .section {
+      margin-bottom: 25px;
+    }
+    
+    .section-header {
+      background: #f5f5f5;
+      border-left: 4px solid #0D9488;
+      padding: 10px 15px;
+      margin-bottom: 15px;
+      font-weight: 600;
+      font-size: 12pt;
+      color: #0D9488;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    /* Form Grid */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px 25px;
+    }
+    
+    .form-field {
+      margin-bottom: 12px;
+    }
+    
+    .form-field.full-width {
+      grid-column: 1 / -1;
+    }
+    
+    .form-label {
+      display: block;
+      font-size: 9pt;
+      color: #666;
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+    
+    .form-value {
+      border: 1px solid #ccc;
+      padding: 8px 12px;
+      min-height: 36px;
+      background: #fafafa;
+      font-size: 11pt;
+      word-break: break-word;
+    }
+    
+    .form-value:empty::before {
+      content: '\00a0';
+    }
+    
+    /* Table */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+      font-size: 10pt;
+    }
+    
+    .data-table th {
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+      padding: 10px 8px;
+      text-align: left;
+      font-weight: 600;
+      color: #0D9488;
+      font-size: 9pt;
+    }
+    
+    .data-table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      vertical-align: top;
+    }
+    
+    .data-table tr:nth-child(even) {
+      background: #fafafa;
+    }
+    
+    /* Totals */
+    .totals-section {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f9fafb;
+      border: 2px solid #0D9488;
+      border-radius: 4px;
+    }
+    
+    .totals-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    
+    .totals-row.total {
+      font-size: 14pt;
+      font-weight: 600;
+      color: #0D9488;
+      border-top: 2px solid #0D9488;
+      padding-top: 10px;
+      margin-top: 10px;
+    }
+    
+    /* Checkbox */
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 10px 0;
+    }
+    
+    .checkbox {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #0D9488;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .checkbox.checked::after {
+      content: '✓';
+      color: #0D9488;
+      font-weight: bold;
+      font-size: 12px;
+    }
+    
+    /* Text area */
+    .text-area {
+      border: 1px solid #ccc;
+      padding: 12px;
+      min-height: 100px;
+      background: #fafafa;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    
+    /* Signature */
+    .signature-section {
+      margin-top: 40px;
+      page-break-inside: avoid;
+    }
+    
+    .signature-line {
+      border-top: 1px solid #333;
+      width: 200px;
+      margin-top: 30px;
+      padding-top: 5px;
+      font-size: 9pt;
+      color: #666;
+    }
+    
+    .signature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-top: 30px;
+    }
+    
+    /* Footer */
+    .footer {
+      margin-top: 40px;
+      padding-top: 15px;
+      border-top: 1px solid #ddd;
+      font-size: 8pt;
+      color: #999;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    /* Print styles */
+    @media print {
+      .page {
+        width: 100%;
+        padding: 10mm;
+      }
+      
+      .header {
+        margin: -10mm -10mm 15px -10mm;
+      }
+    }
+    
+    /* Utility */
+    .text-right {
+      text-align: right;
+    }
+    
+    .font-bold {
+      font-weight: 600;
+    }
+    
+    .text-sm {
+      font-size: 9pt;
+    }
+    
+    .text-xs {
+      font-size: 8pt;
+    }
+    
+    .text-teal {
+      color: #0D9488;
+    }
+    
+    .bg-teal-light {
+      background: #f0fdfa;
+    }
+    
+    /* Declaration box */
+    .declaration-box {
+      border: 1px solid #ddd;
+      padding: 15px;
+      margin: 20px 0;
+      background: #fafafa;
+    }
+    
+    .declaration-box h4 {
+      color: #0D9488;
+      margin-bottom: 10px;
+      font-size: 10pt;
+    }
+    
+    .declaration-box p {
+      font-size: 9pt;
+      line-height: 1.6;
+      color: #555;
+    }
+    
+    /* Diagnosis list */
+    .diagnosis-list {
+      margin: 10px 0;
+    }
+    
+    .diagnosis-item {
+      padding: 8px 0;
+      border-bottom: 1px dotted #ddd;
+    }
+    
+    .diagnosis-item:last-child {
+      border-bottom: none;
+    }
+    
+    .diagnosis-code {
+      display: inline-block;
+      background: #0D9488;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-size: 9pt;
+      font-weight: 600;
+      margin-right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Page 1 -->
+  <div class="page">
+    <header class="header">
+      <h1>CIGNA INTERNATIONAL</h1>
+      <h2>Pre-authorization Request Form</h2>
+      <p class="header-note">Please complete all sections clearly. Incomplete forms may delay processing.</p>
+    </header>
+    
+    <!-- Section 1: Patient Information -->
+    <section class="section">
+      <div class="section-header">1. Patient Information</div>
+      <div class="form-grid">
+        <div class="form-field">
+          <label class="form-label">Full Name (as shown on ID)</label>
+          <div class="form-value" data-field="patient.name"></div>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Date of Birth (MM/DD/YYYY)</label>
+          <div class="form-value" data-field="patient.dateOfBirth"></div>
+        </div>
+        
+        <div class="form-field">
+          <label class="form-label">Gender</label>
+          <div class="form-value" data-field="patient.gender"></div>
+        </div>
+        
+        <div class="form-field">
+          <label class="form-label">Phone Number</label>
+          <div class="form-value" data-field="patient.phone"></div>
+        </div>
+        
+        <div class="form-field">
+          <label class="form-label">Email Address</label>
+          <div class="form-value" data-field="patient.email"></div>
+        </div>
+        
+        <div class="form-field">
+          <label class="form-label">Passport / ID Number</label>
+          <div class="form-value" data-field="patient.passportNumber"></div>
+        </div>
+        
+        <div class="form-field full-width">
+          <label class="form-label">Residential Address</label>
+          <div class="form-value" data-field="patient.address"></div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Section 2: Insurance Information -->
+    <section class="section">
+      <div class="section-header">2. Insurance Information</div>
+      
+      <div class="form-grid">
+        <div class="form-field">
+          <label class="form-label">Member ID / Certificate Number *</label>
+          <div class="form-value" data-field="insurance.memberId"></div>
+        </div>
+        
+        <div class="form-field">
+          <label class="form-label">Policy Number *</label>
+          <div class="form-value" data-field="insurance.policyNumber"></div>
+        </div>
+        
+        <div class="form-field">
+          <label class="form-label">Group Number</label>
+          <div class="form-value" data-field="insurance.groupNumber"></div>
+        </div>
+        
+        <div class="form-field">
+          <label class="form-label">Plan Name</label>
+          <div class="form-value" data-field="insurance.planName"></div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Section 3: Medical Provider Information -->
+    <section class="section">
+      <div class="section-header">3. Medical Provider Information</div>
+      
+      <div class="form-grid">
+        <div class="form-field full-width">
+          <label class="form-label">Hospital / Facility Name *</label>
+          <div class="form-value" data-field="medicalEvent.hospitalName"></div>
+        </div>
+        
+        <div class="form-field full-width">
+          <label class="form-label">Hospital Address</label>
+          <div class="form-value" data-field="medicalEvent.hospitalAddress"></div>
+        </div>
+        
+        <div class="form-field">
+          <label class="form-label">Department / Specialty</label>
+          <div class="form-value" data-field="medicalEvent.department"></div>
+        </div>
+        
+        <div class="form-field">
+          <label class="form-label">Treating Physician *</label>
+          <div class="form-value" data-field="medicalEvent.doctorName"></div>
+        </div>
+        
+        <div class="form-field">
+          <label class="form-label">Physician License Number</label>
+          <div class="form-value" data-field="medicalEvent.doctorLicense"></div>
+        </div>
+        
+        <div class="form-field">
+          <label class="form-label">Physician Contact Number</label>
+          <div class="form-value" data-field="medicalEvent.doctorPhone"></div>
+        </div>
+      </div>
+    </section>
+    
+    <div class="footer">
+      <span>Form: CIGNA-PA-001 | Generated by CareVoyage</span>
+      <span>Page 1 of 2</span>
+    </div>
+  </div>
+  
+  <!-- Page 2 -->
+  <div class="page">
+    <header class="header">
+      <h1>CIGNA INTERNATIONAL</h1>
+      <h2>Pre-authorization Request Form (Continued)</h2>
+    </header>
+    
+    <!-- Section 4: Diagnosis Information -->
+    <section class="section">
+      <div class="section-header">4. Diagnosis Information</div>
+      
+      <div class="form-field">
+        <label class="form-label">Primary Diagnosis (ICD-10 Code) *</label>
+        <div class="form-value" data-field="diagnosis.primary"></div>
+      </div>
+      
+      <div class="form-field" style="margin-top: 15px;">
+        <label class="form-label">Presenting Symptoms / Reason for Admission *</label>
+        <div class="text-area" data-field="diagnosis.symptoms"></div>
+      </div>
+      
+      <div id="secondary-diagnoses" style="margin-top: 15px;">
+        <label class="form-label">Secondary Diagnoses (if applicable)</label>
+        <div class="diagnosis-list" data-field="diagnosis.secondary"></div>
+      </div>
+    </section>
+    
+    <!-- Section 5: Treatment Information -->
+    <section class="section">
+      <div class="section-header">5. Treatment / Service Information</div>
+      
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Service Item</th>
+            <th>Description</th>
+            <th style="width: 60px;">Qty</th>
+            <th style="width: 100px;">Unit Price</th>
+            <th style="width: 100px;">Total</th>
+          </tr>
+        </thead>
+        <tbody id="treatments-table">
+          <!-- Dynamic rows will be inserted here -->
+        </tbody>
+      </table>
+      
+      <div class="totals-section">
+        <div class="totals-row">
+          <span class="text-sm">Currency:</span>
+          <span class="font-bold text-teal" data-field="financial.currency"></span>
+        </div>
+        <div class="totals-row total">
+          <span>TOTAL ESTIMATED COST</span>
+          <span data-field="financial.totalAmount"></span>
+        </div>
+      </div>
+      
+      <div class="checkbox-group" style="margin-top: 15px;">
+        <span class="form-label" style="margin: 0;">Direct Billing Requested:</span>
+        <div class="checkbox" data-field="financial.isDirectBilling"></div>
+        <span>Yes</span>
+      </div>
+    </section>
+    
+    <!-- Declaration Section -->
+    <section class="signature-section">
+      <div class="declaration-box">
+        <h4>DECLARATION</h4>
+        <p>I hereby declare that the information provided above is true and accurate to the best of my knowledge. I understand that any false or misleading information may result in the denial of this pre-authorization request.</p>
+      </div>
+      
+      <div class="signature-grid">
+        <div>
+          <div class="signature-line">Patient / Claimant Signature</div>
+        </div>
+        
+        <div>
+          <div class="signature-line">Date</div>
+        </div>
+      </div>
+      
+      <div class="signature-grid" style="margin-top: 30px;">
+        <div>
+          <div class="signature-line">Physician Signature</div>
+        </div>
+        
+        <div>
+          <div class="signature-line">Date</div>
+        </div>
+      </div>
+    </section>
+    
+    <div class="footer">
+      <span>Form: CIGNA-PA-001 v2024.1 | Generated by CareVoyage</span>
+      <span>Page 2 of 2 | Claim ID: <span data-field="claim.id"></span></span>
+    </div>
+  </div>
+  
+  <script>
+    // Template data binding helper
+    // This script will be executed when generating the PDF to fill in the data
+    window.fillTemplate = function(data) {
+      // Simple data binding
+      document.querySelectorAll('[data-field]').forEach(el => {
+        const field = el.getAttribute('data-field');
+        const value = getNestedValue(data, field);
+        
+        if (value !== undefined && value !== null) {
+          if (field === 'diagnosis.primary') {
+            el.textContent = `${value.icd10Code} - ${value.description}`;
+          } else if (field === 'financial.totalAmount') {
+            const currency = getNestedValue(data, 'financial.currency') || 'USD';
+            el.textContent = `${currency} ${parseFloat(value).toFixed(2)}`;
+          } else if (field === 'financial.isDirectBilling') {
+            if (value) el.classList.add('checked');
+          } else if (field === 'diagnosis.secondary') {
+            if (Array.isArray(value) && value.length > 0) {
+              el.innerHTML = value.map((d, i) => 
+                `\u003cdiv class="diagnosis-item"\u003e\u003cspan class="diagnosis-code"\u003e${d.icd10Code}\u003c/span\u003e${d.description}\u003c/div\u003e`
+              ).join('');
+            } else {
+              el.innerHTML = '\u003cdiv class="diagnosis-item text-sm" style="color: #999;"\u003eNo secondary diagnoses\u003c/div\u003e';
+            }
+          } else {
+            el.textContent = String(value);
+          }
+        }
+      });
+      
+      // Fill treatments table
+      const treatmentsTable = document.getElementById('treatments-table');
+      if (treatmentsTable && data.treatments) {
+        treatmentsTable.innerHTML = data.treatments.map(t => 
+          `\u003ctr\u003e
+            \u003ctd\u003e${t.item}\u003c/td\u003e
+            \u003ctd\u003e${t.description}\u003c/td\u003e
+            \u003ctd\u003e${t.quantity}\u003c/td\u003e
+            \u003ctd class="text-right"\u003e${t.unitPrice.toFixed(2)}\u003c/td\u003e
+            \u003ctd class="text-right"\u003e${t.totalPrice.toFixed(2)}\u003c/td\u003e
+          \u003c/tr\u003e`
+        ).join('');
+        
+        // Add empty rows if less than 3 treatments
+        const emptyRows = Math.max(0, 3 - data.treatments.length);
+        for (let i = 0; i < emptyRows; i++) {
+          treatmentsTable.innerHTML += `\u003ctr\u003e\u003ctd\u003e\u0026nbsp;\u003c/td\u003e\u003ctd\u003e\u0026nbsp;\u003c/td\u003e\u003ctd\u003e\u0026nbsp;\u003c/td\u003e\u003ctd\u003e\u0026nbsp;\u003c/td\u003e\u003ctd\u003e\u0026nbsp;\u003c/td\u003e\u003c/tr\u003e`;
+        }
+      }
+    };
+    
+    function getNestedValue(obj, path) {
+      return path.split('.').reduce((current, key) => {
+        if (current === null || current === undefined) return undefined;
+        return current[key];
+      }, obj);
+    }
+  </script>
+</body>
+</html>
